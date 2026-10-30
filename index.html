@@ -6,70 +6,33 @@
 <title>The Oracle Bauble ✦ Christmas Edition</title>
 <style>
   * { box-sizing: border-box; }
-  html, body { margin: 0; }
+  html, body { margin: 0; height: 100%; }
   body {
     background: transparent;
-    font-family: Georgia, "Times New Roman", serif;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     user-select: none;
     -webkit-user-select: none;
     -webkit-tap-highlight-color: transparent;
   }
-
-  /* DESKTOP: bauble (dominant) and instructions side by side, centred on the same horizontal line */
-  .layout {
-    display: flex;
-    flex-direction: row;
-    align-items: center;        /* vertical middles level with each other */
-    justify-content: center;
-    gap: 2vw;
-    padding: 0 2vw;
-    width: 100%;
-    min-height: 100vh;
-    min-height: 100dvh;
-  }
   .wrapper {
-    flex: 0 0 auto;
+    width: 100%;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
   }
+  /* the bauble fills the frame it is shown in: as big as fits, always square */
   .bauble-wrap {
     position: relative;
-    width: min(62vw, 100vh);    /* up to 62% of the width, never taller than the screen */
-    width: min(62vw, 100dvh);
+    width: min(100vw, 100vh);
+    width: min(100vw, 100dvh);
     aspect-ratio: 1;
     cursor: pointer;
     touch-action: manipulation;
-    container-type: size;       /* answer text scales with the bauble */
-  }
-  .static-side {
-    flex: 1 1 0;
-    min-width: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .static-side img {
-    display: block;
-    width: 100%;
-    max-width: 560px;
-    max-height: 90vh;
-    object-fit: contain;
-    height: auto;
-    pointer-events: none;
-  }
-
-  /* MOBILE: stacked and centred, bauble full width */
-  @media (max-width: 700px), (max-aspect-ratio: 1/1) {
-    .layout {
-      flex-direction: column;
-      justify-content: flex-start;
-      gap: 0;
-      padding: 0 0 24px;
-    }
-    .bauble-wrap { width: min(100vw, 900px); }
-    .static-side { flex: none; width: 100%; justify-content: center; }
-    .static-side img { width: min(92vw, 480px); }
+    container-type: size;
   }
 
   /* --- bauble, answer text and shake: unchanged from your original --- */
@@ -120,8 +83,7 @@
     100% { transform: rotate(0) translate(0,0); }
   }
 
-  /* text never drops below 10px, so it stays readable */
-  .answer { font-size: clamp(10px, 2.9cqw, 17px); }
+  .answer { font-size: clamp(8px, 2.9cqw, 40px); }
   @media (prefers-reduced-motion: reduce) {
     .wrapper.shaking .bauble { animation-duration: .15s; }
     .answer { transition: none; }
@@ -129,17 +91,12 @@
 </style>
 </head>
 <body>
-<div class="layout">
-  <main class="wrapper" id="wrapper">
-    <div class="bauble-wrap" id="baubleWrap" role="button" tabindex="0" aria-label="Tap to consult the Oracle Bauble">
-      <img class="bauble" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjWjz4BeO-P9DKrrjizIBdRw3KDvZyBvwjrDjr2DmCSAIGz8vIX8rfq-rJlb199VlDIRyyb070c6KNjmyOUfNvR33zxmdlYOR8Jc8lubGwBWFpAKOD8Xx0MA81knfGlR1AZjpIbNr4kXmaP6Ezkh1-3gCq4DFEWxUF395iM60CIKOEGvXZlyACneUauVREU/s1261/Ornate%20Ruby%20Christmas%20Bauble.png" alt="Ornate red Christmas bauble">
-      <div class="answer-window"><div class="answer" id="answerText" aria-live="polite">?</div></div>
-    </div>
-  </main>
-  <aside class="static-side">
-    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhxSLA6dwAevOx2X0vBUqJ4CZWMPJsb4zHU4_G1UWSeSMRBL8uZGXDkOr1ki5iGkRm4ECKbAFmtLrzr4yJbSQMHh6xcaoVRcUfkCJZ-swehJQ3WwZmxklZSssSJzOutr30xqz3AA_adW9Dtq3eRBiF6yKDE1_EDvkQg9ipfghhpupkJqZDAk_pAIUYZ1uWy/s1042/Oracle%20Bauble%20Instructions.png" alt="Oracle Bauble - Christmas Edition. Tap the bauble, get your answer. Shake on mobile. Consult at your own risk.">
-  </aside>
-</div>
+<main class="wrapper" id="wrapper">
+  <div class="bauble-wrap" id="baubleWrap" role="button" tabindex="0" aria-label="Tap to consult the Oracle Bauble">
+    <img class="bauble" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjWjz4BeO-P9DKrrjizIBdRw3KDvZyBvwjrDjr2DmCSAIGz8vIX8rfq-rJlb199VlDIRyyb070c6KNjmyOUfNvR33zxmdlYOR8Jc8lubGwBWFpAKOD8Xx0MA81knfGlR1AZjpIbNr4kXmaP6Ezkh1-3gCq4DFEWxUF395iM60CIKOEGvXZlyACneUauVREU/s1261/Ornate%20Ruby%20Christmas%20Bauble.png" alt="Ornate red Christmas bauble">
+    <div class="answer-window"><div class="answer" id="answerText" aria-live="polite">?</div></div>
+  </div>
+</main>
 <script>
   const answers = [
     "The elves have checked.\nProceed with festive confidence.",
