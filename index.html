@@ -1,22 +1,4 @@
 <!DOCTYPE html>
-body {
-    min-height: 100vh;
-    min-height: 100svh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-}
-
-.wrapper {
-    width: min(100%, 680px);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    margin: auto;
-}
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -38,8 +20,8 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    min-height: 100svh;
-    padding: 4px 8px 12px;
+    min-height: 100dvh;
+    padding: 10px 12px;
     user-select: none;
     -webkit-user-select: none;
     -webkit-tap-highlight-color: transparent;
@@ -52,11 +34,11 @@ body {
     text-align: center;
   }
   .brand {
-    width: clamp(150px, 24vh, 250px);
-    max-width: 58vw;
+    /* capped by viewport height so the whole game fits on screen */
+    width: min(78vw, 430px, 32vh);
     height: auto;
     display: block;
-    margin: 0 auto 0;
+    margin: 0 auto 2px;
     filter: drop-shadow(0 3px 10px rgba(255, 190, 65, .22));
     pointer-events: none;
   }
@@ -65,15 +47,13 @@ body {
     font: 700 clamp(10px, 2.5vw, 13px)/1.4 Georgia, serif;
     letter-spacing: .18em;
     text-transform: uppercase;
-    margin: 0 0 2px;
-    font-size: clamp(8px, 1.6vh, 11px);
-    letter-spacing: .12em;
+    margin: 0 0 4px;
   }
   .bauble-wrap {
     position: relative;
-    width: min(78vw, 440px, 58vh);
+    width: min(94vw, 590px, 58vh);
     aspect-ratio: 1;
-    flex: 0 0 auto;
+    container-type: size; /* lets the answer text scale with the bauble */
     cursor: pointer;
     touch-action: manipulation;
   }
@@ -102,7 +82,8 @@ body {
   .answer {
     width: 100%;
     color: #fff0bd;
-    font: 700 clamp(10px, 2.15vw, 17px)/1.35 Georgia, "Times New Roman", serif;
+    font: 700 clamp(8px, 2.9vw, 17px)/1.35 Georgia, "Times New Roman", serif;
+    font-size: clamp(8px, 2.9cqw, 17px);
     text-align: center;
     white-space: pre-line;
     text-shadow: 0 0 5px #ffb52c, 0 0 12px rgba(255, 177, 35, .9), 1px 2px 2px #4b1300;
@@ -124,7 +105,7 @@ body {
     100% { transform: rotate(0) translate(0,0); }
   }
   .prompt {
-    margin: 1px 0 0;
+    margin: 0;
     color: #8d5d20;
     font: 700 clamp(11px, 2.7vw, 15px)/1.5 Georgia, serif;
     letter-spacing: .16em;
@@ -133,22 +114,31 @@ body {
   }
   .prompt span { color: #b68a3e; }
   .credit {
-    margin-top: 3px;
+    margin-top: 10px;
     color: rgba(139, 100, 42, .75);
     font: 10px/1.4 Georgia, serif;
     letter-spacing: .16em;
     text-transform: uppercase;
   }
-  @media (max-width: 600px) {
-    .brand { width: clamp(135px, 22vh, 205px); max-width: 52vw; }
-    .bauble-wrap { width: min(88vw, 390px, 52vh); }
+  @media (max-width: 420px) {
+    .brand { width: min(76vw, 340px, 32vh); }
+    .bauble-wrap { width: min(98vw, 520px, 58vh); }
     .answer-window { width: 42%; height: 32%; }
-    .answer { font-size: clamp(9px, 2.6vw, 13px); }
-    .tagline { margin-bottom: 1px; }
   }
-  @media (max-height: 760px) {
-    .brand { width: clamp(125px, 19vh, 190px); }
-    .bauble-wrap { width: min(70vw, 390px, 52vh); }
+  /* short landscape screens (phones on their side): logo left, bauble right */
+  @media (max-height: 520px) and (orientation: landscape) {
+    .wrapper {
+      display: grid;
+      width: min(100%, 900px);
+      grid-template-columns: 1fr auto;
+      grid-template-rows: 1fr auto auto auto auto 1fr;
+      column-gap: 20px;
+    }
+    .brand { grid-column: 1; grid-row: 2; width: min(38vw, 300px); }
+    .tagline { grid-column: 1; grid-row: 3; }
+    .prompt { grid-column: 1; grid-row: 4; }
+    .credit { grid-column: 1; grid-row: 5; }
+    .bauble-wrap { grid-column: 2; grid-row: 1 / 7; align-self: center; width: min(92vh, 56vw); }
   }
   @media (prefers-reduced-motion: reduce) {
     .wrapper.shaking .bauble { animation-duration: .15s; }
